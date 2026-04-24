@@ -244,10 +244,3 @@ npm run test:coverage
 Resultado HTML:
 
 - `frontend/coverage/lcov-report/index.html`
-
-### Evidencia para entrega del examen
-
-Adjuntar screenshot de ambos reportes:
-
-- JaCoCo backend (`target/site/jacoco/index.html`)
-- Coverage frontend (`frontend/coverage/lcov-report/index.html`)
