@@ -96,6 +96,113 @@ Patrón principal:
   - `repository` encapsula persistencia.
   - `dto/mapper` desacopla contratos HTTP del modelo persistente.
 
+## Estructura real del proyecto
+
+> Estructura actual del repositorio (se omiten carpetas generadas como `.git`, `target`, `frontend/node_modules`, `frontend/dist`, `frontend/coverage`).
+
+```text
+nanobank-ledger/
+├── pom.xml
+├── README.md
+├── src/
+│   ├── main/
+│   │   ├── java/com/nanobank/ledger/
+│   │   │   ├── NanoBankLedgerApplication.java
+│   │   │   ├── auth/
+│   │   │   │   ├── controller/AuthController.java
+│   │   │   │   ├── dto/{AuthResponse,LoginRequest,RegisterRequest}.java
+│   │   │   │   ├── entity/User.java
+│   │   │   │   ├── repository/UserRepository.java
+│   │   │   │   └── service/{AuthService.java,impl/AuthServiceImpl.java}
+│   │   │   ├── exception/
+│   │   │   │   ├── ErrorResponse.java
+│   │   │   │   ├── GlobalExceptionHandler.java
+│   │   │   │   ├── InsufficientBalanceException.java
+│   │   │   │   ├── TransactionNotFoundException.java
+│   │   │   │   ├── UnauthorizedResourceException.java
+│   │   │   │   ├── WalletDeletionNotAllowedException.java
+│   │   │   │   └── WalletNotFoundException.java
+│   │   │   ├── security/
+│   │   │   │   ├── JwtAuthFilter.java
+│   │   │   │   ├── JwtService.java
+│   │   │   │   ├── SecurityConfig.java
+│   │   │   │   └── UserDetailsServiceImpl.java
+│   │   │   ├── transaction/
+│   │   │   │   ├── controller/TransactionController.java
+│   │   │   │   ├── dto/{TransactionFilterDTO,TransactionRequestDTO,TransactionResponseDTO,TransferRequestDTO}.java
+│   │   │   │   ├── entity/{Transaction,TransactionType}.java
+│   │   │   │   ├── mapper/TransactionMapper.java
+│   │   │   │   ├── repository/TransactionRepository.java
+│   │   │   │   └── service/
+│   │   │   │       ├── TransactionService.java
+│   │   │   │       ├── domain/{TransactionBalanceService,TransactionTransferResolver}.java
+│   │   │   │       └── impl/TransactionServiceImpl.java
+│   │   │   └── wallet/
+│   │   │       ├── controller/WalletController.java
+│   │   │       ├── dto/{WalletRequestDTO,WalletResponseDTO}.java
+│   │   │       ├── entity/{Wallet,WalletType}.java
+│   │   │       ├── mapper/WalletMapper.java
+│   │   │       ├── repository/WalletRepository.java
+│   │   │       └── service/{WalletService.java,impl/WalletServiceImpl.java}
+│   │   └── resources/
+│   │       ├── application.yml
+│   │       └── db/migration/
+│   │           ├── V1__create_users.sql
+│   │           ├── V2__create_wallets.sql
+│   │           ├── V3__create_transactions.sql
+│   │           └── V4__spanish_domain_values.sql
+│   └── test/
+│       ├── java/com/nanobank/ledger/
+│       │   ├── auth/{AuthServiceTest.java,controller/AuthControllerTest.java,entity/UserTest.java}
+│       │   ├── exception/GlobalExceptionHandlerTest.java
+│       │   ├── security/{JwtAuthFilterTest.java,JwtServiceTest.java,SecurityConfigTest.java,UserDetailsServiceImplTest.java}
+│       │   ├── transaction/
+│       │   │   ├── TransactionServiceImplTest.java
+│       │   │   ├── controller/TransactionControllerTest.java
+│       │   │   ├── dto/{TransactionDtoSmokeTest.java,TransactionRequestDTOTest.java}
+│       │   │   ├── mapper/TransactionMapperTest.java
+│       │   │   └── service/domain/{TransactionBalanceServiceTest.java,TransactionTransferResolverTest.java}
+│       │   └── wallet/{WalletServiceImplTest.java,controller/{WalletControllerTest.java,WalletControllerUnitTest.java}}
+│       └── resources/mockito-extensions/org.mockito.plugins.MockMaker
+└── frontend/
+    ├── package.json
+    ├── angular.json
+    ├── jest.config.cjs
+    ├── setup-jest.ts
+    ├── proxy.conf.json
+    ├── public/favicon.ico
+    └── src/
+        ├── main.ts
+        ├── styles.scss
+        ├── index.html
+        └── app/
+            ├── app.config.ts
+            ├── app.routes.ts
+            ├── app.ts
+            ├── app.html
+            ├── app.scss
+            ├── core/
+            │   ├── guards/{auth.guard.ts,auth.guard.spec.ts}
+            │   ├── interceptors/{auth.interceptor.ts,auth.interceptor.spec.ts}
+            │   ├── models/{auth.model.ts,transaction.model.ts,wallet.model.ts}
+            │   └── services/
+            │       ├── auth.service.ts
+            │       ├── auth.service.spec.ts
+            │       ├── transaction.service.ts
+            │       ├── transaction.service.spec.ts
+            │       ├── wallet.service.ts
+            │       └── wallet.service.spec.ts
+            └── features/
+                ├── auth/{login.component.ts,login.component.spec.ts,register.component.ts,register.component.spec.ts}
+                ├── dashboard/{dashboard.component.ts,dashboard.component.spec.ts}
+                ├── transactions/
+                │   ├── transaction-item.component.ts
+                │   ├── transaction-item.component.spec.ts
+                │   ├── transaction-list.component.ts
+                │   └── transaction-list.component.spec.ts
+                └── wallets/{wallet-card.component.ts,wallet-card.component.spec.ts}
+```
+
 ## Decisiones técnicas de SOLID aplicadas
 
 1. **SRP (Single Responsibility Principle)**
