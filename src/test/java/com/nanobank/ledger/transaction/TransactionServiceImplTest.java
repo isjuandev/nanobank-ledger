@@ -15,6 +15,8 @@ import com.nanobank.ledger.transaction.dto.TransferRequestDTO;
 import com.nanobank.ledger.transaction.entity.Transaction;
 import com.nanobank.ledger.transaction.entity.TransactionType;
 import com.nanobank.ledger.transaction.repository.TransactionRepository;
+import com.nanobank.ledger.transaction.service.domain.TransactionBalanceService;
+import com.nanobank.ledger.transaction.service.domain.TransactionTransferResolver;
 import com.nanobank.ledger.transaction.service.impl.TransactionServiceImpl;
 import com.nanobank.ledger.wallet.entity.Wallet;
 import com.nanobank.ledger.wallet.entity.WalletType;
@@ -23,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,6 +48,12 @@ class TransactionServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Spy
+    private TransactionBalanceService balanceService;
+
+    @Mock
+    private TransactionTransferResolver transferResolver;
 
     @InjectMocks
     private TransactionServiceImpl transactionService;
@@ -131,8 +140,8 @@ class TransactionServiceImplTest {
         TransferRequestDTO request = TransferRequestDTO.builder().targetWalletId(2L).build();
 
         when(userRepository.findByEmail("user@nanobank.com")).thenReturn(Optional.of(user));
-        when(walletRepository.findByOwner(user)).thenReturn(List.of(walletA, walletB));
-        when(transactionRepository.findByIdAndWalletIn(eq(77L), anyList())).thenReturn(Optional.of(transaction));
+        when(transferResolver.resolve(77L, request, user))
+                .thenReturn(new TransactionTransferResolver.TransferContext(transaction, walletA, walletB));
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         transactionService.transferTransaction(77L, request, "user@nanobank.com");
@@ -150,8 +159,8 @@ class TransactionServiceImplTest {
         TransferRequestDTO request = TransferRequestDTO.builder().targetWalletId(2L).build();
 
         when(userRepository.findByEmail("user@nanobank.com")).thenReturn(Optional.of(user));
-        when(walletRepository.findByOwner(user)).thenReturn(List.of(walletA, walletB));
-        when(transactionRepository.findByIdAndWalletIn(eq(88L), anyList())).thenReturn(Optional.of(transaction));
+        when(transferResolver.resolve(88L, request, user))
+                .thenReturn(new TransactionTransferResolver.TransferContext(transaction, walletA, walletB));
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         transactionService.transferTransaction(88L, request, "user@nanobank.com");
@@ -168,8 +177,8 @@ class TransactionServiceImplTest {
         TransferRequestDTO request = TransferRequestDTO.builder().targetWalletId(2L).build();
 
         when(userRepository.findByEmail("user@nanobank.com")).thenReturn(Optional.of(user));
-        when(walletRepository.findByOwner(user)).thenReturn(List.of(walletA, walletB));
-        when(transactionRepository.findByIdAndWalletIn(eq(999L), anyList())).thenReturn(Optional.empty());
+        when(transferResolver.resolve(999L, request, user))
+                .thenThrow(new TransactionNotFoundException("Transacción no encontrada para id: 999"));
 
         assertThrows(TransactionNotFoundException.class,
                 () -> transactionService.transferTransaction(999L, request, "user@nanobank.com"));
