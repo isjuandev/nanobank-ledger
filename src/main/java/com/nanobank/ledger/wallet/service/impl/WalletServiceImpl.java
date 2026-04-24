@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.nanobank.ledger.auth.entity.User;
 import com.nanobank.ledger.auth.repository.UserRepository;
-import com.nanobank.ledger.exception.UnauthorizedResourceException;
 import com.nanobank.ledger.exception.WalletDeletionNotAllowedException;
 import com.nanobank.ledger.exception.WalletNotFoundException;
 import com.nanobank.ledger.transaction.repository.TransactionRepository;
@@ -63,7 +62,7 @@ public class WalletServiceImpl implements WalletService {
                 .orElseThrow(() -> new WalletNotFoundException("Billetera no encontrada para id: " + id));
 
         if (!wallet.getOwner().getId().equals(owner.getId())) {
-            throw new UnauthorizedResourceException("La billetera no pertenece al usuario autenticado");
+            throw new WalletNotFoundException("Billetera no encontrada para id: " + id);
         }
 
         long transactionCount = transactionRepository.countByWallet(wallet);

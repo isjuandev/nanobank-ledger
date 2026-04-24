@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.nanobank.ledger.auth.entity.User;
 import com.nanobank.ledger.auth.repository.UserRepository;
-import com.nanobank.ledger.exception.UnauthorizedResourceException;
 import com.nanobank.ledger.exception.WalletDeletionNotAllowedException;
 import com.nanobank.ledger.exception.WalletNotFoundException;
 import com.nanobank.ledger.transaction.repository.TransactionRepository;
@@ -109,7 +108,7 @@ class WalletServiceImplTest {
         when(userRepository.findByEmail("owner@nanobank.com")).thenReturn(Optional.of(authenticatedUser));
         when(walletRepository.findById(55L)).thenReturn(Optional.of(wallet));
 
-        assertThrows(UnauthorizedResourceException.class,
+        assertThrows(WalletNotFoundException.class,
                 () -> walletService.deleteWallet(55L, "owner@nanobank.com"));
         verify(walletRepository, never()).delete(any(Wallet.class));
     }
