@@ -215,6 +215,11 @@ Genera corrección mínima y explica causa raíz del fallo.
 
 ## Cobertura de Tests
 
+| Fecha | Módulo | Estado | Tests | Cobertura principal | Detalle de cobertura |
+|---|---|---|---|---|---|
+| 2026-04-24 | Backend (JaCoCo) | ✅ OK | 90 ejecutados, 0 fallos, 0 errores, 0 skipped | Líneas: 96.29% | Instrucciones: 92.99%, Ramas: 80.00%, Métodos: 89.11%, Clases: 100% |
+| 2026-04-24 | Frontend (Jest) | ✅ OK | 46 passed (11 suites), 0 fallos | Líneas: 90.48% | Statements: 90.66%, Branches: 78.57%, Functions: 95.28% |
+
 ### Backend (JaCoCo)
 
 Generar reporte:
