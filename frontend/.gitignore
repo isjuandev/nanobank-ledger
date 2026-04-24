@@ -1,0 +1,67 @@
+# =========================================
+# Angular build output
+# =========================================
+dist/
+tmp/
+out-tsc/
+.angular/
+
+# =========================================
+# Node
+# =========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================================
+# Tests / reports
+# =========================================
+coverage/
+test-results/
+playwright-report/
+*.lcov
+testem.log
+
+# =========================================
+# Cache / runtime junk
+# =========================================
+.cache/
+.sass-cache/
+connect.lock
+libpeerconnection.log
+typings/
+__screenshots__/
+
+# =========================================
+# IDE / editors
+# =========================================
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+
+# =========================================
+# Environment / secrets
+# =========================================
+.env
+.env.*
+!.env.example
+
+# =========================================
+# OS files
+# =========================================
+.DS_Store
+Thumbs.db
