@@ -1,0 +1,67 @@
+# =========================================
+# OS / Editor
+# =========================================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# JetBrains / VS Code
+.idea/
+*.iml
+.vscode/
+.fleet/
+
+# =========================================
+# Java / Maven / Spring Boot
+# =========================================
+target/
+out/
+build/
+*.class
+.mvn/timing.properties
+
+# Logs / temp
+logs/
+*.log
+*.tmp
+*.bak
+
+# Test / coverage reports
+jacoco.exec
+surefire-reports/
+failsafe-reports/
+site/
+coverage/
+
+# =========================================
+# Node / Angular (frontend)
+# =========================================
+frontend/node_modules/
+frontend/.angular/
+frontend/dist/
+frontend/coverage/
+frontend/.sass-cache/
+frontend/.eslintcache
+frontend/.cache/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# =========================================
+# Environment / secrets
+# =========================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+# Local runtime files
+*.pid
+*.seed
