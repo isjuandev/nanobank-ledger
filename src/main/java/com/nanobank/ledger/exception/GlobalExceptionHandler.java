@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 @Slf4j
@@ -100,6 +101,18 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(
                         "METODO_NO_PERMITIDO",
                         ex.getMessage(),
+                        LocalDateTime.now(),
+                        null
+                ));
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponse> handleResponseStatus(ResponseStatusException ex) {
+        String reason = ex.getReason() != null ? ex.getReason() : "Error de solicitud";
+        return ResponseEntity.status(ex.getStatusCode())
+                .body(new ErrorResponse(
+                        "ERROR_HTTP",
+                        reason,
                         LocalDateTime.now(),
                         null
                 ));

@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,7 +55,8 @@ public class TransactionController {
             @Valid @RequestBody TransactionRequestDTO dto,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        return ResponseEntity.ok(transactionService.createTransaction(dto, userDetails.getUsername()));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(transactionService.createTransaction(dto, userDetails.getUsername()));
     }
 
     @PatchMapping("/{id}/transfer")

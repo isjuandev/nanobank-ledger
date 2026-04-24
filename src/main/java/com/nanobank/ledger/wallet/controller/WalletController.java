@@ -8,6 +8,7 @@ import com.nanobank.ledger.wallet.dto.WalletResponseDTO;
 import com.nanobank.ledger.wallet.service.WalletService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +37,8 @@ public class WalletController {
             @Valid @RequestBody WalletRequestDTO dto,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        return ResponseEntity.ok(walletService.createWallet(dto, requireAuthenticatedEmail(userDetails)));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(walletService.createWallet(dto, requireAuthenticatedEmail(userDetails)));
     }
 
     @GetMapping("/{id}")
