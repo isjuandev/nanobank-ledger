@@ -5,7 +5,7 @@ import com.nanobank.ledger.auth.dto.LoginRequest;
 import com.nanobank.ledger.auth.dto.RegisterRequest;
 import com.nanobank.ledger.auth.entity.User;
 import com.nanobank.ledger.auth.repository.UserRepository;
-import com.nanobank.ledger.auth.service.AuthService;
+import com.nanobank.ledger.auth.service.impl.AuthServiceImpl;
 import com.nanobank.ledger.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class AuthServiceTest {
     private AuthenticationManager authenticationManager;
 
     @InjectMocks
-    private AuthService authService;
+    private AuthServiceImpl authService;
 
     @Test
     void register_success_returnsToken() {
