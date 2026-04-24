@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nanobank
+    username: admin
+    password: admin123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+jwt:
+  # Base64 (>=256 bits). Example value for local dev only.
+  secret: U3VwZXJTZWNyZXRLZXlGb3JOYW5vQmFua0xlZGdlcjIwMjZfSldUX0hTMjU2X0tleV8xMjM0NTY3ODkw
+  expiration-ms: 86400000
